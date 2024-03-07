@@ -22,6 +22,12 @@ loaded_final_rf_model = saved_data['final_rf_model']
 loaded_symptom_index = saved_data['symptom_index']
 loaded_predictions_classes = saved_data['predictions_classes']
 
+
+df1 = pd.read_csv ("dataset\symptom_precaution.csv")
+
+with open('disease_precautions1.pkl', 'rb') as file:
+    loaded_fetch_precautions = pickle.load(file)
+
 @app.route('/')
 def index():
     return render_template("Home.html")
@@ -113,6 +119,22 @@ def predictDisease(symptoms):
         "final_prediction": final_prediction
     }
     return predictions
+
+
+def fetch_precautions(disease_name):
+    try:
+        # Finding the row corresponding to the given disease
+        row = df1[df1['Disease'] == disease_name].iloc[0]
+
+        # Extracting precautions from the row
+        precautions = [row['Precaution_1'], row['Precaution_2'], row['Precaution_3'], row['Precaution_4']]
+        
+        # Removing any NaN values
+        precautions = [precaution for precaution in precautions if pd.notna(precaution)]
+
+        return precautions
+    except IndexError:
+        return f"No information found for '{disease_name}'"
 
 if __name__ == '__main__':
     app.run(debug=True)
