@@ -156,16 +156,25 @@
       </div>
         <br><br><br>
         <div align="center">
-          <button class="bottom" type="button" onclick="getdata()">Precaution</button>
+          <button class="bottom" type="button" onclick="predict1()">Precaution</button>
           <br/><br>
   
           </div>
+  
+          <div id="result-container1">
+            
+              {% if result %}
+              <p>Result: {{ result1.final_prediction }}</p>
+              {% endif %}
+        </div>
 
-        <h5>Precautions : <id="Precaution_1" ><h6 class="alert">bath twice ,use detol or neem in bathing water, keep infected area dry, use clean cloths</h6></h5><br>
+        <!-- <h5>Precautions : <id="Precaution_1" ><h6 class="alert">bath twice ,use detol or neem in bathing water, keep infected area dry, use clean cloths</h6></h5><br> -->
         <!-- <h5>Precaution 2 : <id="Precaution_2" ><h6 class="alert1">use detol or neem in bathing water</h6></h5><br>
         <h5>Precaution 3 : <id="Precaution_3" ><h6 class="alert2">keep infected area dry</h6></h5><br>
         <h5>Precaution 4 : <id="Precaution_4" ><h6 class="alert3">use clean cloths</h6></h5><br>
 <br> -->
+<br>
+<br>
 <div align="center">
   <button class="bottom" type="button" ><a href="{{url_for('indexx')}}" style="text-decoration:none;">Book your appoinment</a></button>
   <br/><br>
@@ -260,7 +269,34 @@
         error: function (error) {
             console.error('Error:', error);
         }
+    })};
+
+
+    function predict1() {
+    var form = document.getElementById("prediction-form");
+    var formData = new FormData(form);
+
+    // Convert FormData to a plain object
+    var formDataObject = {};
+    formData.forEach(function (value, key) {
+        formDataObject[key] = value;
     });
+
+    $.ajax({
+        type: 'POST',
+        url: '/predict',
+        data: formDataObject,
+        success: function (result1) {
+            // Update the result in the resultDiv
+            $('#result-container1').html('<p> You may suffering from : ' + result1.final_prediction + '</p>');
+        },
+        error: function (error) {
+            console.error('Error:', error);
+        }
+    });
+
+  
+
 }
 
 </script>

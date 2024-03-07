@@ -97,6 +97,16 @@ def predict():
     result = predictDisease(symptoms)
     return jsonify(result)
 
+
+def predict1():
+    
+
+    result1 = fetch_precautions(result)
+    return jsonify(result1)
+
+
+
+
 def predictDisease(symptoms):
     # creating input data for the models
     input_data = [0] * len(loaded_symptom_index)
@@ -121,10 +131,10 @@ def predictDisease(symptoms):
     return predictions
 
 
-def fetch_precautions(disease_name):
+def fetch_precautions(result):
     try:
         # Finding the row corresponding to the given disease
-        row = df1[df1['Disease'] == disease_name].iloc[0]
+        row = df1[df1['Disease'] == result].iloc[0]
 
         # Extracting precautions from the row
         precautions = [row['Precaution_1'], row['Precaution_2'], row['Precaution_3'], row['Precaution_4']]
@@ -134,7 +144,8 @@ def fetch_precautions(disease_name):
 
         return precautions
     except IndexError:
-        return f"No information found for '{disease_name}'"
+        return f"No information found for '{result}'"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
