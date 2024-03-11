@@ -164,7 +164,7 @@
           <div id="result-container1">
             
               {% if result %}
-              <p>Result: {{ result1.final_prediction }}</p>
+              <p>Result: {{ result1.fetch_precautions }}</p>
               {% endif %}
         </div>
 
@@ -288,7 +288,7 @@
         data: formDataObject,
         success: function (result1) {
             // Update the result in the resultDiv
-            $('#result-container1').html('<p> You may suffering from : ' + result1.final_prediction + '</p>');
+            $('#result-container1').html('<p> You may suffering from : ' + result1.fetch_precautions + '</p>');
         },
         error: function (error) {
             console.error('Error:', error);

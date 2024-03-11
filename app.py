@@ -107,6 +107,9 @@ def predict1():
 
 
 
+
+
+
 def predictDisease(symptoms):
     # creating input data for the models
     input_data = [0] * len(loaded_symptom_index)
